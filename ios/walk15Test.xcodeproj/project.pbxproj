@@ -14,6 +14,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-walk15Test-walk15TestTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-walk15Test-walk15TestTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9152703FE3494344BAD45950 /* Satoshi-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E4D8021B21B1454893A7A758 /* Satoshi-Variable.ttf */; };
+		D6296C9B6F3A4FAC9A1779D0 /* D-DINCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9CD83B04E224291905F0DA7 /* D-DINCondensed-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-walk15Test.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-walk15Test.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = walk15Test/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-walk15Test-walk15TestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-walk15Test-walk15TestTests.release.xcconfig"; path = "Target Support Files/Pods-walk15Test-walk15TestTests/Pods-walk15Test-walk15TestTests.release.xcconfig"; sourceTree = "<group>"; };
+		B9CD83B04E224291905F0DA7 /* D-DINCondensed-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "D-DINCondensed-Bold.ttf"; path = "../assets/fonts/D-DINCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		E4D8021B21B1454893A7A758 /* Satoshi-Variable.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Satoshi-Variable.ttf"; path = "../assets/fonts/Satoshi-Variable.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -108,6 +112,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6F08CE945DA343758D017A0B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E4D8021B21B1454893A7A758 /* Satoshi-Variable.ttf */,
+				B9CD83B04E224291905F0DA7 /* D-DINCondensed-Bold.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +138,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				6F08CE945DA343758D017A0B /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -245,6 +260,8 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				9152703FE3494344BAD45950 /* Satoshi-Variable.ttf in Resources */,
+				D6296C9B6F3A4FAC9A1779D0 /* D-DINCondensed-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

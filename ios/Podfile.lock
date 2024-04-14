@@ -935,29 +935,6 @@ PODS:
   - React-Mapbuffer (0.74.0-rc.8):
     - glog
     - React-debug
-  - react-native-skia (1.2.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.01.01.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React
-    - React-callinvoker
-    - React-Codegen
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - React-nativeconfig (0.74.0-rc.8)
   - React-NativeModulesApple (0.74.0-rc.8):
     - glog
@@ -1266,7 +1243,6 @@ DEPENDENCIES:
   - React-jsitracing (from `../node_modules/react-native/ReactCommon/hermes/executor/`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
-  - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1361,8 +1337,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   React-Mapbuffer:
     :path: "../node_modules/react-native/ReactCommon"
-  react-native-skia:
-    :path: "../node_modules/@shopify/react-native-skia"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1449,7 +1423,6 @@ SPEC CHECKSUMS:
   React-jsitracing: 899f4d1ea5b546e9492025c2ae51e3f1b95d02ad
   React-logger: 55862754d59c1fc8370aaff01399fdd75758cc16
   React-Mapbuffer: 604db834d9adf8848451a325f26ffa604cdfd306
-  react-native-skia: 1591f95f87089cd855d91c9bc88d6c0f9d2080ac
   React-nativeconfig: 829ee8dde46d5b24911d61581f29682a851c97b9
   React-NativeModulesApple: cc532520c05e85a4f7fa687db893148453bf8e23
   React-perflogger: d1298b3577ab17efab10dd4d660a87285c565194

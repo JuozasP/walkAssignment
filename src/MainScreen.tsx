@@ -11,7 +11,7 @@ export const MainScreen = () => {
         <View style={styles.logoContainer}>
           <Logo />
         </View>
-        <CircularSlider />
+        <CircularSlider initialStepCount={3658} />
       </View>
       <Text>MainScreen</Text>
       <ParallaxSlider />
