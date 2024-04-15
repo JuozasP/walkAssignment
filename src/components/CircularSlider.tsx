@@ -6,6 +6,8 @@ import Animated, {
   useAnimatedProps,
   useDerivedValue,
   useSharedValue,
+  withTiming,
+  useAnimatedReaction,
 } from 'react-native-reanimated';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {polar2Canvas} from '../utils';
@@ -26,21 +28,26 @@ export const CircularSlider = ({
 }: Props) => {
   const initialPercent = initialStepCount / maxStepCount;
   const percentComplete = useSharedValue(initialPercent);
+  const oldPercentComplete = useSharedValue(initialPercent);
+
   const initialAngle = Math.PI / 2 + Math.PI * 2 * percentComplete.value;
   const width = 168;
   const strokeWidth = 16;
   const center = width / 2;
   const r = (width - strokeWidth) / 2;
-  const x1 = center - r * Math.cos(initialAngle);
-  const y1 = -r * Math.sin(initialAngle) + center;
-
-  const indicatorX = useSharedValue(x1);
-  const indicatorY = useSharedValue(y1);
+  const initialX = center - r * Math.cos(initialAngle);
+  const initialY = -r * Math.sin(initialAngle) + center;
 
   const circumference = Math.PI * 2 * 76;
 
-  const previousIndicatorCoords = useSharedValue({x: x1, y: y1});
+  const previousIndicatorCoords = useSharedValue({x: initialX, y: initialY});
   const completedCircles = useSharedValue(0);
+  const initialTheta = useSharedValue(
+    Math.atan2(initialX - center, -(initialY - center)),
+  );
+  const theta = useSharedValue(
+    Math.atan2(initialX - center, -(initialY - center)) + Math.PI,
+  );
 
   const currentSteps = useSharedValue(0);
   const [mySteps, setMySteps] = useState(0);
@@ -54,65 +61,33 @@ export const CircularSlider = ({
   }, []);
 
   const gesture = Gesture.Pan()
-    .onUpdate(({translationX, translationY, velocityX, absoluteX}) => {
+    .onUpdate(({translationX, translationY}) => {
       const oldCanvasX = translationX + previousIndicatorCoords.value.x;
       const oldCanvasY = translationY + previousIndicatorCoords.value.y;
       const xPrime = oldCanvasX - center;
       const yPrime = -(oldCanvasY - center);
       const rawTheta = Math.atan2(yPrime, xPrime);
-      let newTheta;
-      const test = (2 * Math.PI + rawTheta - Math.PI / 2) % (2 * Math.PI);
+      const normalisedAngle =
+        (2 * Math.PI + rawTheta - Math.PI / 2) % (2 * Math.PI);
 
-      // if (absoluteX < width / 2 && rawTheta < 0) {
-      //   newTheta = Math.PI;
-      // } else if (absoluteX > width / 2 && rawTheta <= 0) {
-      //   newTheta = 0;
-      // } else {
-      // }
-      newTheta = rawTheta;
+      theta.value = rawTheta;
 
-      // 6.27;
-      // console.log('rawTheta ', test);
-
-      const test2 = 1 - test / (2 * Math.PI);
-      percentComplete.value = test2;
-      currentSteps.value = Math.round(maxStepCount * test2);
-
-      // because circumference
-      if (Math.round(test2 * 100) / 100 >= 0.99) {
-        // if (velocityX < 0 && completedCircles.value > 1) {
-        //   completedCircles.value -= 1;
-        //   console.log('RATAS MAZIAU', test2);
-        // } else {
-        //   completedCircles.value += 1;
-        //   console.log('RATAS DAUGIAU', test2);
-        // }
-      }
-      //84
-
-      const newCoords = polar2Canvas(
-        {
-          theta: newTheta,
-          radius: r,
-        },
-        {
-          x: center,
-          y: center,
-        },
-      );
-      // if( Math.round()){
-
-      // }
-      console.log('absoluteX ', newCoords.x, ' // ', newCoords.y);
-
-      indicatorX.value = newCoords.x;
-      indicatorY.value = newCoords.y;
+      const newPercentValue = 1 - normalisedAngle / (2 * Math.PI);
+      percentComplete.value = newPercentValue;
+      currentSteps.value = Math.round(maxStepCount * newPercentValue);
     })
-    .onEnd(() => {
-      previousIndicatorCoords.value = {
-        x: indicatorX.value,
-        y: indicatorY.value,
-      };
+    .onFinalize(() => {
+      percentComplete.value = withTiming(oldPercentComplete.value, {
+        duration: 500,
+      });
+
+      // theta.value = rawTheta;
+      const TAU = 2 * Math.PI;
+      const rest = initialTheta.value % TAU;
+      const rest1 = theta.value > Math.PI / 2 ? rest + Math.PI : rest - Math.PI;
+      theta.value = withTiming(rest1, {duration: 500});
+      completedCircles.value = 0;
+      currentSteps.value = initialStepCount;
     });
 
   const onSteps = (result: number) => {
@@ -128,13 +103,43 @@ export const CircularSlider = ({
     runOnJS(debounceOnSteps)(currentSteps.value);
   });
 
-  const animatedProps2 = useAnimatedProps(
-    () => ({
-      x: indicatorX.value,
-      y: indicatorY.value,
-    }),
-    [],
+  useAnimatedReaction(
+    () => {
+      return circumference - circumference * percentComplete.value;
+    },
+    (result, previous) => {
+      if (!previous) return;
+
+      if (result - previous >= circumference - 80) {
+        completedCircles.value += 1;
+      } else if (
+        Math.round(result - previous) < -80 &&
+        result - previous <= circumference - 80
+      ) {
+        if (completedCircles.value > 0) {
+          completedCircles.value -= 1;
+        }
+      }
+    },
   );
+
+  const animatedProps2 = useAnimatedProps(() => {
+    const newCoords = polar2Canvas(
+      {
+        theta: theta.value,
+        radius: r,
+      },
+      {
+        x: center,
+        y: center,
+      },
+    );
+
+    return {
+      x: newCoords.x,
+      y: newCoords.y,
+    };
+  }, []);
 
   const animatedDasharrayOffset = useAnimatedProps(
     () => ({
@@ -183,12 +188,11 @@ export const CircularSlider = ({
       <View style={styles.innerContainer}>
         <MiniLogo />
         <AnimatedNumbers
-          animateToNumber={mySteps}
+          animateToNumber={mySteps + completedCircles.value * MAX_STEP}
           fontStyle={styles.stepsStyles}
         />
         <Text style={styles.goalText}>Dienos tikslas</Text>
         <Text style={styles.stepText}>{maxStepCount.toLocaleString()}</Text>
-        <Text style={styles.stepText}>{completedCircles.value}</Text>
       </View>
     </View>
   );

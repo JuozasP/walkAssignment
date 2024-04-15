@@ -1,8 +1,9 @@
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import {View, SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 import {CircularSlider} from './components/CircularSlider';
 import {Logo} from './images/logo';
 import {ParallaxSlider} from './components/parallaxSlider/ParallaxSlider';
+import {colors} from './styleUtils';
 
 export const MainScreen = () => {
   return (
@@ -13,7 +14,6 @@ export const MainScreen = () => {
         </View>
         <CircularSlider initialStepCount={3658} />
       </View>
-      <Text>MainScreen</Text>
       <ParallaxSlider />
     </SafeAreaView>
   );
@@ -22,6 +22,7 @@ export const MainScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   circularContainer: {
     padding: 16,
